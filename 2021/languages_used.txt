@@ -20,18 +20,3 @@ Day 19: Beacon Scanner              ==>  Standard ML          (beacon_scanner.sm
 Day 20: Trench Map                  ==>  Tcl                  (trench_map.tcl)
 Day 21: Dirac Dice                  ==>  PostScript           (dirac_dice_part1.ps, dirac_dice_part2.ps)
 Day 22: Reactor Reboot              ==>  Ruby                 (reactor_reboot_part1.rb, reactor_reboot_part2.rb)
-
-
-
-
-TODO:
-
-Perl
-Common Lisp
-Java
-
-Ada
-PureScript
-Agda
-C#
-C++
