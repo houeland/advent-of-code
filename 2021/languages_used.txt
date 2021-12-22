@@ -1,0 +1,37 @@
+Day 1: Sonar Sweep                  ==>  Haskell              (sweep.hs)
+Day 2: Dive!                        ==>  Befunge-93           (dive.befunge)
+Day 3: Binary Diagnostic            ==>  APL                  (binary_diagnostic.apl)
+Day 4: Giant Squid                  ==>  TypeScript           (bingo.ts)
+Day 5: Hydrothermal Venture         ==>  Python-3             (hydrothermal.py)
+Day 6: Lanternfish                  ==>  Rust                 (lantern-fish/src/main.rs)
+Day 7: The Treachery of Whales      ==>  Erlang               (crabs.erl)
+Day 8: Seven Segment Search         ==>  Prolog               (seven_segment_part1.pl, seven_segment_part2.pl)
+Day 9: Smoke Basin                  ==>  J                    (smoke_basin.ijs)
+Day 10: Syntax Scoring              ==>  Forth                (syntax_scoring_part1.forth, syntax_scoring_part2.forth)
+Day 11: Dumbo Octopus               ==>  Bash                 (dumbo_octopus.sh)
+Day 12: Passage Pathing             ==>  PHP                  (passage_pathing.php)
+Day 13: Transparent Origami         ==>  SQLite               (origami.sql)
+Day 14: Extended Polymerization     ==>  AWK                  (polymerization_part1.awk, polymerization_part2.awk)
+Day 15: Chiton                      ==>  Pascal               (chiton.pas)
+Day 16: Packet Decoder              ==>  C                    (packet_decoder.c)
+Day 17: Trick Shot                  ==>  Swift                (trick-shot.swift)
+Day 18: Snailfish                   ==>  Visual Basic .NET    (snailfish.vb)
+Day 19: Beacon Scanner              ==>  Standard ML          (beacon_scanner.sml)
+Day 20: Trench Map                  ==>  Tcl                  (trench_map.tcl)
+Day 21: Dirac Dice                  ==>  PostScript           (dirac_dice_part1.ps, dirac_dice_part2.ps)
+Day 22: Reactor Reboot              ==>  Ruby                 (reactor_reboot_part1.rb, reactor_reboot_part2.rb)
+
+
+
+
+TODO:
+
+Perl
+Common Lisp
+Java
+
+Ada
+PureScript
+Agda
+C#
+C++

@@ -1,0 +1,93 @@
+/p1pos 4 def
+/p2pos 6 def
+/p1score 0 def
+/p2score 0 def
+/nextdieroll 1 def
+/numrolls 0 def
+
+/min {
+  %(min start stack) = stack (/stack) =
+  2 copy gt
+  { exch pop }
+  { pop }
+  ifelse
+  %(min end stack) = stack (/stack) =
+} bind def
+
+%124 256 min =
+%5 5 min =
+%5 6 min =
+%6 5 min =
+
+
+/incdieroll {
+  /nextdieroll nextdieroll 1 add def
+  nextdieroll 101 eq
+  {
+    /nextdieroll nextdieroll 100 sub def
+  } if 
+} bind def
+
+/rolldie {
+  nextdieroll incdieroll
+  /numrolls numrolls 1 add def
+  % (rolldie) = dup =
+} bind def
+
+/triproll {
+  rolldie rolldie rolldie add add
+} bind def
+
+/movedie {
+  %(movedie start stack) = stack (/stack) =
+  add
+  {
+    dup 10 gt {
+      10 sub
+    } {exit} ifelse
+  } loop
+  % (move_to_new_pos:) = dup =
+  %(movedie end stack) = stack (/stack) =
+} bind def
+
+/playp1 {
+  %(playp1) =
+  /p1pos p1pos triproll movedie def
+  /p1score p1score p1pos add def
+} bind def
+
+/playp2 {
+  %(playp2) =
+  /p2pos p2pos triproll movedie def
+  /p2score p2score p2pos add def
+} bind def
+
+/dumpvars {
+  [(p1pos) p1pos (p1score) p1score] ==
+  [(p2pos) p2pos (p2score) p2score] ==
+  [(nextdieroll) nextdieroll (numrolls) numrolls] ==
+} bind def
+
+p1pos p2pos mul =
+
+(hello) = 
+
+dumpvars
+
+{
+playp1 %dumpvars
+p1score 1000 ge {exit} if
+playp2 %dumpvars
+p2score 1000 ge {exit} if
+} loop
+
+(done) = 
+
+dumpvars
+
+(final score) =
+[(loser score) p1score p2score min] ==
+[(numrolls) numrolls] ==
+[(result) p1score p2score min numrolls mul] ==
+
+quit

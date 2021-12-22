@@ -1,0 +1,422 @@
+/bignum_add_internal {
+  /whichidx exch def
+  bn_result whichidx bn_x whichidx get bn_y whichidx get add put
+} bind def
+
+/bignumzero {
+  [0 0 0 0 0 0 0 0]
+} bind def
+
+/bignumone {
+  [0 0 0 0 0 0 0 1]
+} bind def
+
+/bignum_collapse_internal {
+  /whichidx exch def
+  /overflow bn_result whichidx get 1000 idiv def
+  /toidx whichidx 1 sub def
+  bn_result whichidx bn_result whichidx get overflow 1000 mul sub put
+  bn_result toidx bn_result toidx get overflow add put
+} bind def
+
+/bignum_collapse_down_internal {
+  /whichidx exch def
+  /overflow bn_result whichidx get 0 lt {-1} {0} ifelse def
+  /toidx whichidx 1 sub def
+  bn_result whichidx bn_result whichidx get overflow 1000 mul sub put
+  bn_result toidx bn_result toidx get overflow add put
+} bind def
+
+/bignumadd {
+  /bn_y exch def
+  /bn_x exch def
+  /bn_result bignumzero def
+  0 bignum_add_internal
+  1 bignum_add_internal
+  2 bignum_add_internal
+  3 bignum_add_internal
+  4 bignum_add_internal
+  5 bignum_add_internal
+  6 bignum_add_internal
+  7 bignum_add_internal
+  7 bignum_collapse_internal
+  6 bignum_collapse_internal
+  5 bignum_collapse_internal
+  4 bignum_collapse_internal
+  3 bignum_collapse_internal
+  2 bignum_collapse_internal
+  1 bignum_collapse_internal
+  bn_result
+} bind def
+
+/bignum_sub_internal {
+  /whichidx exch def
+  bn_result whichidx bn_x whichidx get bn_y whichidx get sub put
+} bind def
+
+/bignumsub {
+  /bn_y exch def
+  /bn_x exch def
+  /bn_result bignumzero def
+  0 bignum_sub_internal
+  1 bignum_sub_internal
+  2 bignum_sub_internal
+  3 bignum_sub_internal
+  4 bignum_sub_internal
+  5 bignum_sub_internal
+  6 bignum_sub_internal
+  7 bignum_sub_internal
+  7 bignum_collapse_down_internal
+  6 bignum_collapse_down_internal
+  5 bignum_collapse_down_internal
+  4 bignum_collapse_down_internal
+  3 bignum_collapse_down_internal
+  2 bignum_collapse_down_internal
+  1 bignum_collapse_down_internal
+  bn_result
+} bind def
+
+/bignumadd_tiny {
+  /tiny_y exch def
+  /bn_x exch def
+  /bn_y [0 0 0 0 0 0 0 tiny_y] def
+  bn_x bn_y bignumadd
+} bind def
+
+/bignum_mul_add_internal {
+  /res_idx exch def
+  /y_idx exch def
+  /x_idx exch def
+
+  /res_val bn_result res_idx get def
+  /y_val bn_y y_idx get def
+  /x_val bn_x x_idx get def
+
+  %[res_idx (res_val) res_val] ==
+  %[y_idx (y_val) y_val] ==
+  %[x_idx (x_val) x_val] ==
+
+  /new_res_val res_val x_val y_val mul add def
+  %[(new_res_val) new_res_val] ==
+  bn_result res_idx new_res_val put
+} bind def
+
+/bignummul {
+  /bn_y exch def
+  /bn_x exch def
+  /bn_result bignumzero def
+  7 7 7 bignum_mul_add_internal
+  6 7 6 bignum_mul_add_internal
+  5 7 5 bignum_mul_add_internal
+  4 7 4 bignum_mul_add_internal
+  3 7 3 bignum_mul_add_internal
+
+  7 6 6 bignum_mul_add_internal
+  6 6 5 bignum_mul_add_internal
+  5 6 4 bignum_mul_add_internal
+  4 6 3 bignum_mul_add_internal
+  3 6 2 bignum_mul_add_internal
+
+  7 5 5 bignum_mul_add_internal
+  6 5 4 bignum_mul_add_internal
+  5 5 3 bignum_mul_add_internal
+  4 5 2 bignum_mul_add_internal
+  3 5 1 bignum_mul_add_internal
+
+  7 4 4 bignum_mul_add_internal
+  6 4 3 bignum_mul_add_internal
+  5 4 2 bignum_mul_add_internal
+  4 4 1 bignum_mul_add_internal
+  3 4 0 bignum_mul_add_internal
+
+  7 bignum_collapse_internal
+  6 bignum_collapse_internal
+  5 bignum_collapse_internal
+  4 bignum_collapse_internal
+  3 bignum_collapse_internal
+  2 bignum_collapse_internal
+  1 bignum_collapse_internal
+  bn_result
+} bind def
+
+/bignum_mul_add_tiny_internal {
+  /idx exch def
+  /x_val bn_x idx get def
+  bn_result idx x_val tiny_y mul put
+} bind def
+
+/bignummul_tiny {
+  /tiny_y exch def
+  /bn_x exch def
+  /bn_result bignumzero def
+
+  7 bignum_mul_add_tiny_internal
+  6 bignum_mul_add_tiny_internal
+  5 bignum_mul_add_tiny_internal
+  4 bignum_mul_add_tiny_internal
+  3 bignum_mul_add_tiny_internal
+  2 bignum_mul_add_tiny_internal
+  1 bignum_mul_add_tiny_internal
+  0 bignum_mul_add_tiny_internal
+
+  7 bignum_collapse_internal
+  6 bignum_collapse_internal
+  5 bignum_collapse_internal
+  4 bignum_collapse_internal
+  3 bignum_collapse_internal
+  2 bignum_collapse_internal
+  1 bignum_collapse_internal
+  bn_result
+} bind def
+
+/dig3 {
+  1000 add 4 string cvs 1 3 getinterval
+} bind def
+
+/bignum_to_str {
+    /bval exch def
+    /stroutput 24 string def
+    stroutput 0 bval 0 get dig3 putinterval
+    stroutput 3 bval 1 get dig3 putinterval
+    stroutput 6 bval 2 get dig3 putinterval
+    stroutput 9 bval 3 get dig3 putinterval
+    stroutput 12 bval 4 get dig3 putinterval
+    stroutput 15 bval 5 get dig3 putinterval
+    stroutput 18 bval 6 get dig3 putinterval
+    stroutput 21 bval 7 get dig3 putinterval
+    stroutput
+} bind def
+
+[1 2 3 4 5 6 7 8] bignum_to_str =
+
+[0 0 100 200 300 400 500 600] [0 0 111 222 333 444 555 666] bignumadd ==
+[0 0 100 200 300 400 500 600] 666 bignumadd_tiny ==
+
+[0 0 0 0 0 2 974 373] [0 0 0 0 0 0 0 27] bignummul ==
+
+[0 0 0 0 0 2 974 373] 27 bignummul_tiny ==
+
+[0 1 100 200 300 400 500 600] [0 0 111 222 333 444 555 666] bignumsub ==
+
+2974373 27 mul =
+
+% 0..31 * 0..11
+
+/mkcnt {
+  11 {bignumzero} repeat 11 array astore
+} bind def
+
+/setval {
+  /newcnt exch def
+  /thepos exch def
+  /thescore exch def
+  %[(setval) thescore thepos newcnt] ==
+  gamestate thescore get thepos newcnt put
+} bind def
+
+% 3 .             1
+% 4 ...           3
+% 5 ......        6
+% 6 .......       7
+% 7 ......        6
+% 8 ...           3
+% 9 .             1
+
+% srcstate: [0 4 1]
+% output states: ... 7 of them!
+
+% gamestate ==
+
+/dumpstack {
+  (stack) =
+  stack
+  (/stack) =
+} bind def
+
+/adddie {
+  add
+  dup 10 gt {
+    10 sub
+  } if
+} bind def
+
+/play_roll {
+  /cnt exch def
+  /rolled exch def
+
+  /newpos for_pos rolled adddie def
+  /newscore for_score newpos add def
+  %[(play_roll) (newpos) newpos (newscore) newscore] ==
+  /addcnt from_cnt cnt bignummul_tiny def
+  %[(play_roll) (addcnt) addcnt] ==
+  /oldcnt gamestate newscore get newpos get def
+  %[(play_roll) (oldcnt) oldcnt] ==
+  /newcnt oldcnt addcnt bignumadd def
+  %[(play_roll) (newcnt) newcnt] ==
+
+  newscore 20 gt
+  {
+    /new_wins_agg new_wins_agg addcnt bignumadd def
+    /old_wins wins_per_round round_num get def
+    /new_wins old_wins addcnt bignumadd def
+    wins_per_round round_num new_wins put
+    %[old_wins (==>) new_wins] ==
+  }
+  if
+
+  newscore newpos newcnt setval
+} bind def
+
+/play_single {
+  %[(play_single) for_score for_pos from_cnt] ==
+  3 1 play_roll
+  4 3 play_roll
+  5 6 play_roll
+  6 7 play_roll
+  7 6 play_roll
+  8 3 play_roll
+  9 1 play_roll
+  for_score for_pos bignumzero setval
+} bind def
+
+/dump_game {
+  (dump_game) ==
+  /totalworlds bignumzero def
+  20 -1 0 {
+    /for_score exch def
+    1 1 10 {
+      /for_pos exch def
+      /from_cnt gamestate for_score get for_pos get def
+      %from_cnt 0 gt {[(score) for_score (pos) for_pos (count) from_cnt] ==} if
+      /totalworlds totalworlds from_cnt bignumadd def
+    } for
+  } for
+  [(remain worlds) totalworlds bignum_to_str] ==
+
+  /totalworlds bignumzero def
+  30 -1 21 {
+    /for_score exch def
+    1 1 10 {
+      /for_pos exch def
+      /from_cnt gamestate for_score get for_pos get def
+      %from_cnt 0 gt
+      %{[(score) for_score (pos) for_pos (count) from_cnt] ==}
+      %if
+      /totalworlds totalworlds from_cnt bignumadd def
+    } for
+  } for
+  [(won worlds) totalworlds bignum_to_str] ==
+} bind def
+
+/play_round {
+  [(play_round) round_num] ==
+  20 -1 0 {
+    /for_score exch def
+    1 1 10 {
+      /for_pos exch def
+      /from_cnt gamestate for_score get for_pos get def
+      %from_cnt 7 get 0 gt
+      %{play_single}
+      %if
+      play_single
+    } for
+  } for
+} bind def
+
+/run_10_rounds {
+%dump_game
+  %[] ==
+  %[] ==
+  %[] ==
+1 1 10 {
+  /round_num exch def
+  /new_wins_agg bignumzero def
+  play_round
+  %[(new wins agg) new_wins_agg bignum_to_str] ==
+  %dump_game
+  %[] ==
+  %[] ==
+  %[] ==
+} for
+%dump_game
+wins_per_round ==
+} bind def
+
+/gamestate 31 {mkcnt} repeat 31 array astore def
+/wins_per_round 20 {bignumzero} repeat 20 array astore def
+0 4 bignumone setval
+run_10_rounds
+/pos4_wins_per_round wins_per_round def
+
+/gamestate 31 {mkcnt} repeat 31 array astore def
+/wins_per_round 20 {bignumzero} repeat 20 array astore def
+0 6 bignumone setval
+run_10_rounds
+/pos6_wins_per_round wins_per_round def
+
+/gamestate 31 {mkcnt} repeat 31 array astore def
+/wins_per_round 20 {bignumzero} repeat 20 array astore def
+0 8 bignumone setval
+run_10_rounds
+/pos8_wins_per_round wins_per_round def
+
+/allthep1wins bignumzero def
+/allthep2wins bignumzero def
+
+/answerplayp1 {
+    /whichround exch def
+    /worlds_p1_made worlds_p1_made 27 bignummul_tiny def
+    [(p1:made worlds) worlds_p1_made bignum_to_str] ==
+    /worlds_p1_made worlds_p1_made pos4_wins_per_round whichround get bignumsub def
+    [(p1:won worlds) pos4_wins_per_round whichround get bignum_to_str] ==
+    [(p1:remaining worlds) worlds_p1_made bignum_to_str] ==
+    /p1superwin pos4_wins_per_round whichround get worlds_p2_made bignummul def
+    /allthep1wins allthep1wins p1superwin bignumadd def
+    [(p1:superwin) p1superwin bignum_to_str] ==
+} bind def
+
+/answerplayp2 {
+    /whichround exch def
+    /worlds_p2_made worlds_p2_made 27 bignummul_tiny def
+    [(p2:made worlds) worlds_p2_made bignum_to_str] ==
+    /worlds_p2_made worlds_p2_made pos6_wins_per_round whichround get bignumsub def
+    [(p2:won worlds) pos6_wins_per_round whichround get bignum_to_str] ==
+    [(p2:remaining worlds) worlds_p2_made bignum_to_str] ==
+    /p2superwin pos6_wins_per_round whichround get worlds_p1_made bignummul def
+    /allthep2wins allthep2wins p2superwin bignumadd def
+    [(p2:superwin) p2superwin bignum_to_str] ==
+} bind def
+
+/play_get_answer {
+    /worlds_p1_made bignumone def
+    /worlds_p2_made bignumone def
+
+    1 answerplayp1
+    1 answerplayp2
+    2 answerplayp1
+    2 answerplayp2
+    3 answerplayp1
+    3 answerplayp2
+    4 answerplayp1
+    4 answerplayp2
+    5 answerplayp1
+    5 answerplayp2
+    6 answerplayp1
+    6 answerplayp2
+    7 answerplayp1
+    7 answerplayp2
+    8 answerplayp1
+    8 answerplayp2
+    9 answerplayp1
+    9 answerplayp2
+    10 answerplayp1
+    10 answerplayp2
+
+} bind def
+
+play_get_answer
+
+[(total p1 wins) allthep1wins bignum_to_str] ==
+[(total p2 wins) allthep2wins bignum_to_str] ==
+
+quit
