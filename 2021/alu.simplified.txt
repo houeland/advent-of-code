@@ -1,0 +1,7 @@
+assert(w5 + 0 - 7 == w6)
+assert(w4 + 5 - 13 == w7)
+assert(w8 + 14 - 7 == w9)
+assert(w10 + 14 - 9 == w11)
+assert(w3 + 4 - 2 == w12)
+assert(w2 + 6 - 9 == w13)
+assert(w1 + 12 - 14 == w14)
